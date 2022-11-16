@@ -1,4 +1,8 @@
- <!DOCTYPE html>
+<?php 
+	
+?>
+
+<!DOCTYPE html>
 <html>
 	<body>
 		
@@ -13,9 +17,10 @@
 					</div>
 					
 					<div style="display: flex; align-items: center; justify-content: center;">
-						<input type="submit" value="Submit" />
+						<input type="submit" value="Submit" name="retrieve" />
 					</div>
 				</form>
+				<h3>Result</h3>
 			</div>
 			<div style="padding: 20px; border: 1px solid grey; display: flex; align-items: center; justify-content: center; flex-direction: column;">
 				<h1>Insert</h1>
@@ -31,7 +36,7 @@
 						<input type="text" name="name" id="name" required />
 					</div>
 					<div style="display: flex; align-items: center; justify-content: center;">
-						<input type="submit" value="Submit" />
+						<input type="submit" value="Submit" name="insert" />
 					</div>
 				</form>
 			</div>
@@ -41,16 +46,23 @@
 
 <?php
 
-$server = "localhost";
-$user = "labuser";
-$pass = "123";
-$db = "ihsan";
+function connect() {
+	$server = "localhost";
+	$user = "labuser";
+	$pass = "123";
+	$db = "ihsan";
+	
+	$conn = new mysqli($server, $user, $pass, $db);
+	
+	return $conn;
+}
 
-if ($_SERVER["REQUEST_METHOD"] == "POST") {
+
+if ($_SERVER["REQUEST_METHOD"] == "POST" and isset($_POST["insert"])) {
 	$id = $_POST["id"];
 	$name = $_POST["name"];
 
-	$conn = new mysqli($server, $user, $pass, $db);
+	$conn = connect();
 
 	if ($conn->connect_error) {
 		die("Connection failed: " . $conn->connect_error);
